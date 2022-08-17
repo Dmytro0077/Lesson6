@@ -208,15 +208,15 @@
 
 
 ////Приклад15
-var tuple = (5, 10);
+//var tuple = (5, 10);
 
-Console.WriteLine(tuple.Item1);
+//Console.WriteLine(tuple.Item1);
 
-Console.WriteLine(tuple.Item2);
+//Console.WriteLine(tuple.Item2);
 
-tuple.Item1 += 26;
+//tuple.Item1 += 26;
 
-Console.WriteLine(tuple.Item1);
+//Console.WriteLine(tuple.Item1);
 
-(int, int) tuple2 = (5, 10);
-(string, int, double) person = ("Tom", 25, 81.23);
+//(int, int) tuple2 = (5, 10);
+//(string, int, double) person = ("Tom", 25, 81.23);
