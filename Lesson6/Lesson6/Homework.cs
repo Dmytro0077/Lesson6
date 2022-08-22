@@ -15,6 +15,14 @@
             Console.WriteLine("Введіть h:");
             string? h1 = Console.ReadLine();
 
+            Console.WriteLine("Введіть число для вибору методу сортування (SelectionSort - 1, BubbleSort - 2 , InsertionSort - 3):");
+            string methodSort = Console.ReadLine();
+            SortAlgorithmType sortAlgorithmType = (SortAlgorithmType)Enum.Parse(typeof(SortAlgorithmType), methodSort,true);
+
+            Console.WriteLine("Введіть число для вибору порядок сортування (Asc - 1, Desk - 2):");
+            string orderSort = Console.ReadLine();
+            OrderBy orderBy = (OrderBy)Enum.Parse(typeof(OrderBy), orderSort,true);
+
             bool resulta = int.TryParse(a1, out int a);
             bool resultb = int.TryParse(b1, out int b);
             bool resultc = int.TryParse(c1, out int c);
@@ -28,19 +36,7 @@
                 Console.WriteLine($"Введений масив перед сортуванням:");
                 printArray(arrayForSort);
 
-                SelectionSort(arrayForSort);
-                BubbleSort(arrayForSort);
-                InsertionSort(arrayForSort);
-
-                Sort(SortAlgorithmType.SelectionSort, arrayForSort);
-                Sort(SortAlgorithmType.BubbleSort, arrayForSort);
-                Sort(SortAlgorithmType.InsertionSort, arrayForSort);
-
-                SortWithOrderBy(OrderBy.Asc, SortAlgorithmType.SelectionSort, arrayForSort);
-                SortWithOrderBy(OrderBy.Asc, SortAlgorithmType.BubbleSort, arrayForSort);
-                SortWithOrderBy(OrderBy.Asc, SortAlgorithmType.InsertionSort, arrayForSort);
-                SortWithOrderBy(OrderBy.Desk, SortAlgorithmType.SortDesk, arrayForSort);              
-
+                SortWithOrderBy(arrayForSort, sortAlgorithmType, orderBy);
             }
 
             else
@@ -49,7 +45,7 @@
             }
         }
 
-        public static void SelectionSort(int[] arr)
+        public static int [] SelectionSort(int[] arr)
         {
             for (int i = 0; i < arr.Length - 1; i++)
             {
@@ -63,11 +59,11 @@
                 arr[i] = temp;
             }
 
-            Console.WriteLine("Масив відсортований за допомогою методу сортування SelectionSort:");
-            printArray(arr);
+            Console.WriteLine($"Масив відсортований за допомогою методу сортування SelectionSort:");
+            return arr;
         }
 
-        public static void BubbleSort(int[] arr)
+        public static int[] BubbleSort(int[] arr)
         {
             for (int i = 0; i < arr.Length - 1; i++)
                 for (int j = 0; j < arr.Length - i - 1; j++)
@@ -79,10 +75,10 @@
                     }
 
             Console.WriteLine("Масив відсортований за допомогою методу сортування BubbleSort:");
-            printArray(arr);
+            return arr;
         }
 
-        public static void InsertionSort(int[] arr)
+        public static int[] InsertionSort(int[] arr)
         {
             for (int i = 1; i < arr.Length; ++i)
             {
@@ -98,7 +94,7 @@
             }
 
             Console.WriteLine("Масив відсортований за допомогою методу сортування Insertion Sort:");
-            printArray(arr);
+            return arr;
         }
 
         public static void printArray(int[] arr)
@@ -109,77 +105,42 @@
         }
 
 
-        //EctraHomework
-        enum SortAlgorithmType
+        //ExtraHomework
+        public enum SortAlgorithmType
         {
-            SelectionSort,
+            SelectionSort=1,
             BubbleSort,
-            InsertionSort,
-            SortDesk,
+            InsertionSort
         }
 
-        enum OrderBy
+        public enum OrderBy
         {
-            Asc,
+            Asc=1,
             Desk,
         }
 
-        static void Sort(SortAlgorithmType sortAlgorithm, int[] arr)
+        static void SortWithOrderBy(int[] arr, SortAlgorithmType sortAlgorithm, OrderBy orderBy)
         {
             switch (sortAlgorithm)
             {
 
                 case SortAlgorithmType.SelectionSort:
-                    SelectionSort(arr);
+                    arr = SelectionSort(arr);
                     break;
                 case SortAlgorithmType.BubbleSort:
-                    BubbleSort(arr);
+                    arr = BubbleSort(arr);
                     break;
                 case SortAlgorithmType.InsertionSort:
-                    InsertionSort(arr);
-                    break;
-                case SortAlgorithmType.SortDesk:
-                    SortDesk(arr);
-                    break;
-
+                    arr = InsertionSort(arr);
+                    break;                    
 
                 default:
                     Console.WriteLine("Щось пішло не так, спробуйте ще)");
                     break;
             }
-        }
-
-        public static void SortDesk(int[] arr)
-        {
-            for (int a = 0; a < arr.Length; a++)
-                for (int b = arr.Length - 1; b > a; b--)
-                    if (arr[b] > arr[b - 1])
-                    {
-                        int temp = arr[b];
-                        arr[b] = arr[b - 1];
-                        arr[b - 1] = temp;
-                    }
-
-            Console.WriteLine("Масив відсортований від найбільшого до найменшого введеного значення:");
+            
+            arr = orderBy == OrderBy.Desk ? arr.Reverse().ToArray() : arr;
             printArray(arr);
-        }
-
-        static void SortWithOrderBy(OrderBy orderBy, SortAlgorithmType sortAlgorithm, int[] arr)
-        {
-            switch (orderBy)
-            {
-
-                case OrderBy.Asc:
-                    Sort(sortAlgorithm, arr);
-                    break;
-                case OrderBy.Desk:
-                    Sort(sortAlgorithm, arr);                                 
-                    break;
-
-                default:
-                    Console.WriteLine("Щось пішло не так, спробуйте ще)");
-                    break;
-            }
         }
     }
 }
